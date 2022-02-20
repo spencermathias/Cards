@@ -38,23 +38,30 @@ socket.on('showBoard',function(data){
 	$('#gameBoard').css('display', data.displayGame);
 });
 
+//event stuff
+document.getElementById('gameBoard').addEventListener('click', checkClick);
+
 var tableItems=[]
 
 function makeFirstDeck(){
 	firstDeck= new Deck({suit:['h','d','s','c'], number:['A',2,3,4,5,6,7,8,9,10,'J','Q','K']})
-	firstDeck.setDfltCardProps(30,(props)=>{
-		let colors={
-			h:"#ff0000",
-			s:"#ff0000",
-			d:"#000000",
-			c:"#000000"
-			}
-		let newprops={
-			textColor:colors[props.suit],
-			text:props.suit+'\n'+props.number
-			}
-		return newprops
-	 })
+	firstDeck.cardSettings={
+		width:30,
+		funct2changeCard:(props)=>{
+			let colors={
+				h:"#ff0000",
+				s:"#ff0000",
+				d:"#000000",
+				c:"#000000"
+				}
+			let newprops={
+				textColor:colors[props.suit],
+				text:props.suit+'\n'+props.number
+				}
+			return newprops
+		},
+		click:()=>{console.log('overloaded')}
+	}
 	firstPile= new Pile([])
 	firstPile.addDeck(firstDeck)
 	firstPile.shuffle(5)
